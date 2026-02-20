@@ -25,7 +25,8 @@
 
     .page {
       width: min(1040px, 94vw);
-      margin: 2rem auto 3rem;
+      margin: 1.2rem auto 2.4rem;
+      padding: 0 0.25rem;
     }
 
     .title-wrap {
@@ -50,7 +51,7 @@
       font-weight: 700;
       text-align: center;
       letter-spacing: 0.01em;
-      white-space: nowrap;
+      line-height: 1.05;
     }
 
     .official {
@@ -163,6 +164,51 @@
       font-size: 1rem;
       font-weight: 700;
     }
+
+    @media (max-width: 700px) {
+      .page {
+        width: min(100%, 96vw);
+        margin: 1rem auto 1.7rem;
+      }
+
+      .title-wrap {
+        align-items: flex-start;
+        gap: 0.45rem;
+      }
+
+      .line {
+        min-width: 28px;
+        border-top-width: 3px;
+        margin-top: 0.48rem;
+      }
+
+      .subtitle {
+        text-align: center;
+      }
+
+      .intro,
+      .warning,
+      .instruction {
+        margin-bottom: 1rem;
+      }
+
+      ol {
+        padding-left: 1.5rem;
+      }
+
+      li {
+        gap: 0.45rem;
+      }
+
+      input[type="checkbox"] {
+        transform: scale(1.1);
+      }
+
+      button {
+        width: 100%;
+        max-width: 350px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -192,103 +238,103 @@
 
   <script>
     const questionText = [
-      "Taken credit to keep betting on a PM?",
-      "Bet on sports markets on PMs?",
       "Know about PMs?",
       "Bet on a PM?",
       "Lost money on a PM?",
       "Lost more than $100 on a PM?",
       "Lost more than $1,000 on a PM?",
-      "Have you ever bet on Christ's Second Coming?",
       "Used Manifold Markets?",
-      "Top 50 on any Manifold leaderboard?",
-      "Know who Shayne Coplan or Tarek Mansour is?",
-      "Ever bet on a PM derivative?",
-      "Used PMs as insurance?",
-      "Used a PM API?",
-      "Vibecoded a PM trading bot?",
-      "Contributed to the PM Ecosystem?",
       "Connected a crypto wallet to a PM exchange?",
-      "Watched a PM-related space on X?",
-      "Stole money to fund a PM habit?",
-      "Used money from the FTX Future Fund to trade on PMs?",
-      "Traded on aa real-money exchange that's not Polymarket, Kalshi, or Opinion?",
-      "Joined CT because of PMs?",
-      "Used a VPN to access an offshore exchage (e.g. Polymarket)?",
-      "Read the governing regulation for designated contract markets?",
-      "Follow the CFTC or Michael Selig on any social media app?",
-      "Helped the Coalition for Prediction Markets or lobbied for looser PM regulation?",
-      "On a PM discord server?",
-      "Deferred real-world responsibilities to trade on PMs?",
-      "Had your PM account hacked?",
-      "Used decision markets to make decisions?",
-      "Banned from a PM?",
-      "Something related to PMs in your X bio?",
-      "Applied to the CFTC for a DCM license?",
-      "Work at a real-money PM?",
       "Had a real money PM account before 2024?",
-      "Been accused of having a gambling addiction when you were actually just forecasting on PMs?",
-      "Breakup because of PM-related incident?",
+      "Traded on aa real-money exchange that's not Polymarket, Kalshi, or Opinion?",
+      "Bet on sports markets on PMs?",
+      "Bet on a geopolitical market?",
+      "Bet on a death market?",
+      "Have you ever bet on Christ's Second Coming?",
       "Bet on your relationship?",
       "Used Manifold.Love?",
-      "Betting while talking to somebody and trying to hide it?",
-      "Bet on a death market?",
-      "Bet on a geopolitical market?",
-      "Spend 2+ hours per day on/thinking about PMs?",
-      "Know who Flip Pidot is?",
-      "received VC funding for a PM company",
-      "Bet on PM’s discretely while at work?",
-      "Fired for a PM-related incident?",
-      "Insider-traded on any PM?",
-      "Got arrested for a PM-related incident?",
-      "Bet on a PM while driving?",
-      "Bet on a PM while drunk?",
-      "Written a blog post about PMs?",
-      "Have an AI report you to the authorities for a PM-related incident?",
-      "Used OpenClaw to trade and/or monitor positions on any PM?",
-      "Copy/counter-traded LLMs on PMs?",
-      "Made a bot that trades 5/15 min crypto markets?",
-      "Had a community note added to your tweet for spreading disinformation about PMs?",
-      "Wrote an open letter to a PM executive?",
-      "Got super mad at Polymarket for not explaining their API changes?",
-      "Think that PMs aren't gambling?",
-      "Think that PMs provide value to society?",
+      "Used decision markets to make decisions?",
+      "Used PMs as insurance?",
+      "Ever bet on a PM derivative?",
       "Lost money (real or play) in a meta-market?",
-      "Ever considered yourself to be monitoring the situation?",
       "Bought a PM-related crypto token?",
       "Farmed a PM-related airdrop?",
+      "Arbitraged between two PM exchanges?",
+      "Used multiple accounts on a PM?",
+      "Used a VPN to access an offshore exchage (e.g. Polymarket)?",
+      "Used a PM API?",
+      "Used OpenClaw to trade and/or monitor positions on any PM?",
+      "Vibecoded a PM trading bot?",
+      "Made a bot that trades 5/15 min crypto markets?",
+      "Copy/counter-traded LLMs on PMs?",
+      "Ran Monte Carlo simulations to optimize your trading strategy?",
       "Used a 3+ screen setup to trade PMs?",
-      "Think that insider trading on PMs is beneficial for society?",
-      "Farmed daily login streaks on a PM longer than your longest relationship?",
-      "Checked a PM position during a family event?",
-      "Checked a PM position during a date?",
-      "Placed a trade from the bathroom at a social event",
-      "Woken up in the middle of the night to check a PM",
-      "Refreshed a market obsessively during a major news event",
-      "Dreamed about a market resolving",
+      "Top 50 on any Manifold leaderboard?",
+      "Work at a real-money PM?",
+      "Contributed to the PM Ecosystem?",
+      "received VC funding for a PM company",
+      "Applied to the CFTC for a DCM license?",
+      "Read the governing regulation for designated contract markets?",
+      "Helped the Coalition for Prediction Markets or lobbied for looser PM regulation?",
+      "Follow the CFTC or Michael Selig on any social media app?",
+      "Know who Shayne Coplan or Tarek Mansour is?",
+      "Know who Flip Pidot is?",
+      "Joined CT because of PMs?",
+      "On a PM discord server?",
+      "Watched a PM-related space on X?",
+      "Something related to PMs in your X bio?",
       "Your dating app bio once included your PM username or PNL screenshot?",
-      "Ghosted a date mid-conversation because a PM notification hit and you had to \"check something real quick\"?",
+      "Written a blog post about PMs?",
+      "Wrote an open letter to a PM executive?",
+      "Had a community note added to your tweet for spreading disinformation about PMs?",
+      "Got canceled for a PM-related tweet?",
       "Your ex still has you blocked on X because you ratio'd them in the replies about election odds?",
+      "Think that PMs aren't gambling?",
+      "Think that PMs provide value to society?",
+      "Think that insider trading on PMs is beneficial for society?",
       "Introduced yourself as a forecaster instead of a gambler?",
       "Argued that PMs are epistemically superior to polls?",
       "Used PM odds to win an argument?",
       "Judged someone's intelligence based on their PM takes?",
+      "Ever considered yourself to be monitoring the situation?",
+      "Used PM-related terms in a non-PM context? (e.g. monitoring the situation)?",
+      "Spend 2+ hours per day on/thinking about PMs?",
+      "Farmed daily login streaks on a PM longer than your longest relationship?",
+      "Felt anxious when unable to check markets?",
+      "Woken up in the middle of the night to check a PM",
+      "Refreshed a market obsessively during a major news event",
+      "Dreamed about a market resolving",
+      "Checked a PM position during a family event?",
+      "Checked a PM position during a date?",
+      "Ghosted a date mid-conversation because a PM notification hit and you had to \"check something real quick\"?",
+      "Placed a trade from the bathroom at a social event",
+      "Betting while talking to somebody and trying to hide it?",
+      "Bet on PM’s discretely while at work?",
+      "Deferred real-world responsibilities to trade on PMs?",
+      "Cancelled an appointment because \"liquidity might dry up if I'm not monitoring\"?",
+      "Spent longer doom-scrolling PM Twitter than you have on actual dating apps this year?",
       "Considered quitting your job to trade PMs full time?",
       "Your longest streak of consecutive green days on Polymarket lasted longer than your last situationship?",
-      "Felt anxious when unable to check markets?",
+      "Been accused of having a gambling addiction when you were actually just forecasting on PMs?",
+      "Breakup because of PM-related incident?",
       "Hid PM losses from someone close to you?",
       "Lied about time spent trading?",
       "Rationalized losses as information acquisition?",
-      "Cancelled an appointment because \"liquidity might dry up if I'm not monitoring\"?",
-      "Spent longer doom-scrolling PM Twitter than you have on actual dating apps this year?",
-      "Arbitraged between two PM exchanges?",
-      "Used multiple accounts on a PM?",
+      "Taken credit to keep betting on a PM?",
+      "Stole money to fund a PM habit?",
+      "Used money from the FTX Future Fund to trade on PMs?",
       "Spread disinformation to manipulate PMs?",
+      "Insider-traded on any PM?",
       "Rugpulled a PM?",
-      "Ran Monte Carlo simulations to optimize your trading strategy?",
-      "Used PM-related terms in a non-PM context? (e.g. monitoring the situation)?",
-      "Got canceled for a PM-related tweet?",
-      "Got in trouble for using PMs?"
+      "Had your PM account hacked?",
+      "Banned from a PM?",
+      "Got super mad at Polymarket for not explaining their API changes?",
+      "Got in trouble for using PMs?",
+      "Fired for a PM-related incident?",
+      "Bet on a PM while drunk?",
+      "Bet on a PM while driving?",
+      "Got arrested for a PM-related incident?",
+      "Have an AI report you to the authorities for a PM-related incident?"
     ];
 
     const questionsEl = document.getElementById('questions');
