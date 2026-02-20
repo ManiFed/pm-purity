@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prediction Market Purity Test</title>
+  <style>
+    :root {
+      --bg: #efe2c3;
+      --ink: #121212;
+      --accent: #8b0c00;
+      --line: #141414;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.35;
+      min-height: 100vh;
+    }
+
+    .page {
+      width: min(1040px, 94vw);
+      margin: 2rem auto 3rem;
+    }
+
+    .title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .line {
+      height: 0;
+      border-top: 5px double var(--line);
+      flex: 1;
+      min-width: 80px;
+      margin-top: 0.35rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.6rem);
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .official {
+      display: inline-block;
+      color: var(--accent);
+      text-decoration: line-through;
+      font-style: italic;
+      transform: rotate(-3deg);
+      margin-right: 0.25em;
+    }
+
+    .subtitle {
+      text-align: left;
+      font-size: clamp(1.4rem, 3vw, 2.1rem);
+      font-style: italic;
+      margin: 0.4rem 0 1.3rem;
+    }
+
+    .intro,
+    .warning,
+    .instruction {
+      max-width: 900px;
+      margin: 0 auto 1.35rem;
+      text-align: center;
+    }
+
+    .intro {
+      font-size: clamp(1.2rem, 2.4vw, 2.1rem);
+      font-style: italic;
+    }
+
+    .warning {
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-weight: 700;
+    }
+
+    .instruction {
+      font-size: clamp(1.5rem, 2.9vw, 2.4rem);
+      margin-top: 2.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    ol {
+      margin: 0;
+      padding-left: 2.4rem;
+    }
+
+    li {
+      margin: 0.55rem 0;
+      font-size: clamp(1rem, 1.8vw, 1.46rem);
+      font-weight: 700;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.62rem;
+    }
+
+    label {
+      cursor: pointer;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    input[type="checkbox"] {
+      margin-top: 0.21rem;
+      transform: scale(1.2);
+      accent-color: #b7b7b7;
+      flex-shrink: 0;
+    }
+
+    .actions {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    button {
+      font-family: inherit;
+      background: var(--ink);
+      color: #fff;
+      border: 0;
+      border-radius: 8px;
+      padding: 0.8rem 1.4rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    #scoreLine {
+      margin: 1rem 0 0.5rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      min-height: 1.7rem;
+    }
+
+    .share {
+      display: none;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 0.65rem;
+    }
+
+    .share a,
+    .share button {
+      border: 2px solid #111;
+      background: transparent;
+      color: #111;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="title-wrap">
+      <span class="line" aria-hidden="true"></span>
+      <h1><span class="official">The Official</span> Prediction Market Purity Test</h1>
+      <span class="line" aria-hidden="true"></span>
+    </div>
+    <p class="subtitle">Have you ever...</p>
+
+    <p class="intro">The Prediction Market Purity Test measures your PM journey. Check each item you have done.</p>
+    <p class="warning">Caution: This is not a bucket list.</p>
+    <p class="instruction">Click on every item you have done.</p>
+
+    <ol id="questions"></ol>
+
+    <section class="actions">
+      <button id="calculate" type="button">Calculate my score</button>
+      <p id="scoreLine" aria-live="polite"></p>
+      <div class="share" id="shareActions">
+        <button type="button" id="copyShare">Copy share text</button>
+        <a id="xShare" href="#" target="_blank" rel="noopener noreferrer">Share on X</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const questionText = [
+      "Have you ever taken credit to keep betting on a PM",
+      "Bet on sports on a PM",
+      "Know about PMs?",
+      "Bet on a PM?",
+      "Lost money on a PM?",
+      "Lost more than $100 on a PM?",
+      "Lost more than $1,000 on a PM?",
+      "Have you ever bet on Christ's Second Coming?",
+      "Used Manifold Markets?",
+      "Top 50 on any Manifold leaderboard?",
+      "Know who Shayne Coplan or Tarek Mansour is?",
+      "Ever bet on a PM derivative?",
+      "Used PMs as insurance?",
+      "Used a PM API?",
+      "Vibecoded a PM trading bot?",
+      "Contributed to the PM Ecosystem?",
+      "Connected a crypto wallet to a PM exchange?",
+      "Watched a PM-related space on X?",
+      "Stole money to fund a PM habit",
+      "Used money from the FTX Future Fund to trade on PMs?",
+      "Traded on aa real-money exchange that's not Polymarket, Kalshi, or Opinion?",
+      "Joined CT because of PMs?",
+      "Used a VPN to access an offshore exchage (e.g. Polymarket)?",
+      "Read the governing regulation for designated contract markets?",
+      "Follow the CFTC or Michael Selig on any social media app?",
+      "Helped the Coalition for Prediction Markets or lobbied for looser PM regulation?",
+      "On a PM discord server?",
+      "Deferred real-world responsibilities to trade on PMs?",
+      "Had your PM account hacked?",
+      "Used decision markets to make decisions?",
+      "Banned from a PM?",
+      "Something related to PMs in your X bio?",
+      "Applied to the CFTC for a DCM license?",
+      "Work at a real-money PM?",
+      "Had a real money PM account before 2024?",
+      "Been accused of having a gambling addiction when you were actually just forecasting on PMs?",
+      "Breakup because of PM-related incident?",
+      "Bet on your relationship?",
+      "Used Manifold.Love?",
+      "Betting while talking to somebody and trying to hide it?",
+      "Bet on a death market?",
+      "Bet on a geopolitical market?",
+      "Spend 2+ hours per day on/thinking about PMs?",
+      "Know who Flip Pidot is?",
+      "received VC funding for a PM company",
+      "Bet on PM’s discretely while at work?",
+      "Fired for a PM-related incident?",
+      "Insider-traded on any PM?",
+      "Got arrested for a PM-related incident?",
+      "Bet on a PM while driving?",
+      "Bet on a PM while drunk?",
+      "Written a blog post about PMs?",
+      "Have an AI report you to the authorities for a PM-related incident?to",
+      "Used OpenClaw to trade and/or monitor positions on any PM?",
+      "Copy/counter-traded LLMs on PMs?",
+      "Made a bot that trades 5/15 min crypto markets?",
+      "Had a community note added to your tweet for spreading disinformation about PMs?",
+      "Wrote an open letter to a PM executive?",
+      "Got super mad at Polymarket for not explaining their API changes?",
+      "Think that PMs aren't gambling?",
+      "Think that PMs provide value to society?",
+      "Lost money (real or play) in a meta-market?",
+      "Ever considered yourself to be monitoring the situation?",
+      "Bought a PM-related crypto token?",
+      "Farmed a PM-related airdrop?",
+      "Used a 3+ screen setup to trade PMs?",
+      "Think that insider trading on PMs is beneficial for society?",
+      "Farmed daily login streaks on a PM longer than your longest relationship?",
+      "Checked a PM position during a family event",
+      "Checked a PM position during a date",
+      "Placed a trade from the bathroom at a social event",
+      "Woken up in the middle of the night to check a PM",
+      "Refreshed a market obsessively during a major news event",
+      "Dreamed about a market resolving",
+      "Your dating app bio once included your PM username or PNL screenshot?",
+      "Ghosted a date mid-conversation because a PM notification hit and you had to \"check something real quick\"?",
+      "Your ex still has you blocked on X because you ratio'd them in the replies about election odds?",
+      "Introduced yourself as a forecaster instead of a gambler?",
+      "Argued that PMs are epistemically superior to polls?",
+      "Used PM odds to win an argument?",
+      "Judged someone's intelligence based on their PM takes?",
+      "Considered quitting your job to trade PMs full time?",
+      "Your longest streak of consecutive green days on Polymarket lasted longer than your last situationship?",
+      "Felt anxious when unable to check markets?",
+      "Hid PM losses from someone close to you?",
+      "Lied about time spent trading?",
+      "Rationalized losses as information acquisition?",
+      "Cancelled an appointment because \"liquidity might dry up if I'm not monitoring\"?",
+      "Spent longer doom-scrolling PM Twitter than you have on actual dating apps this year?",
+      "Arbitraged between two PM exchanges?",
+      "Used multiple accounts on a PM?",
+      "Spread disinformation to manipulate PMs?",
+      "Rugpulled a PM?",
+      "Ran Monte Carlo simulations to optimize your trading strategy?",
+      "Used PM-related terms in a non-PM context? (e.g. monitoring the situation)?",
+      "Got canceled for a PM-related tweet?",
+      "Got in trouble for using PMs?"
+    ];
+
+    const questionsEl = document.getElementById('questions');
+
+    questionText.forEach((text, index) => {
+      const li = document.createElement('li');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = `q-${index}`;
+
+      const label = document.createElement('label');
+      label.setAttribute('for', checkbox.id);
+      label.textContent = text;
+
+      li.append(checkbox, label);
+      questionsEl.appendChild(li);
+    });
+
+    const calculateButton = document.getElementById('calculate');
+    const scoreLine = document.getElementById('scoreLine');
+    const shareActions = document.getElementById('shareActions');
+    const xShare = document.getElementById('xShare');
+    const copyShare = document.getElementById('copyShare');
+    let shareMessage = '';
+
+    function updateShareLinks(score, checkedCount) {
+      shareMessage = `I scored ${score} on the Prediction Market Purity Test (${checkedCount} boxes checked).`;
+      xShare.href = `https://x.com/intent/tweet?text=${encodeURIComponent(shareMessage)}`;
+    }
+
+    calculateButton.addEventListener('click', () => {
+      const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+      const score = 100 - checkedCount;
+      scoreLine.textContent = `Your Prediction Market Purity Score is ${score}.`;
+      updateShareLinks(score, checkedCount);
+      shareActions.style.display = 'flex';
+    });
+
+    copyShare.addEventListener('click', async () => {
+      if (!shareMessage) return;
+      try {
+        await navigator.clipboard.writeText(shareMessage);
+        copyShare.textContent = 'Copied!';
+        setTimeout(() => {
+          copyShare.textContent = 'Copy share text';
+        }, 1200);
+      } catch {
+        copyShare.textContent = 'Clipboard blocked';
+        setTimeout(() => {
+          copyShare.textContent = 'Copy share text';
+        }, 1200);
+      }
+    });
+  </script>
+</body>
+</html>
